@@ -121,6 +121,7 @@ class ProductoController extends Controller
             ];
         }
         session(['carrito' => $carrito]);
+        session()->flash('exito', 'Articulo agregado al carrito.');
         return redirect()->route('productos.index');
     }
 

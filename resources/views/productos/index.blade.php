@@ -3,7 +3,7 @@
     <div class="flex justify-end w-full">
         <div class="flex w-1/6 p-4">
             <div class="p-4 bg-blue-600 text-white text-center rounded-full">
-                {{ session('carrito') != null ? count(session('carrito')) : 'Vacio' }}
+                <a href="{{route('micarrito')}}">{{ session('carrito') != null ? count(session('carrito')) : 'Vacio' }}</a>
             </div>
         </div>
     </div>
@@ -14,7 +14,7 @@
               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
             </svg>
             <div class="ms-3 text-sm font-medium">
-              <p>El producto se ha creado correctamente.</p>
+              <p>{{session('exito')}}</p>
             </div>
         </div>
         @endif
@@ -48,31 +48,14 @@
                         {{ $producto->fabricante->nombre }}
                     </td>
                     <td class="px-6 py-4 text-right">
-                        ${{ $producto->precio }}
+                        {{ $producto->precio }}€
                     </td>
                     <td class="px-6 py-4 text-center">
-                        <!-- Acciones: Editar, Añadir al carrito, Eliminar -->
                         <form action="{{ route('productos.comprar', $producto) }}" method="POST" class="inline-block">
                             @csrf
                             <button type="submit"
                                 class="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md">
-                                Al carrito
-                            </button>
-                        </form>
-
-                        <form action="{{ route('productos.edit', $producto) }}" method="GET" class="inline-block">
-                            <button type="submit"
-                                class="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md">
-                                Editar
-                            </button>
-                        </form>
-
-                        <form method="POST" action="{{ route('productos.destroy', $producto) }}" class="inline-block">
-                            @method('DELETE')
-                            @csrf
-                            <button type="submit" class="text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md"
-                                onclick="return confirm('¿Está seguro?')">
-                                Eliminar
+                                Comprar
                             </button>
                         </form>
                     </td>
