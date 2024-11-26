@@ -5,14 +5,6 @@
             <div class="p-4 bg-blue-600 text-white text-center rounded-full">
                 {{ session('carrito') != null ? count(session('carrito')) : 'Vacio' }}
             </div>
-            <div class="m-4 h-6 w-28 bg-red-600 text-white text-center rounded-lg">
-                <form action="{{ route('productos.vaciar') }}" method="POST">
-                    @csrf
-                    <button type="submit">
-                        Vaciar carrito
-                    </button>
-                </form>
-            </div>
         </div>
     </div>
 
@@ -60,7 +52,7 @@
                     </td>
                     <td class="px-6 py-4 text-center">
                         <!-- Acciones: Editar, Añadir al carrito, Eliminar -->
-                        <form action="{{ route('productos.add', $producto) }}" method="POST" class="inline-block">
+                        <form action="{{ route('productos.comprar', $producto) }}" method="POST" class="inline-block">
                             @csrf
                             <button type="submit"
                                 class="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md">

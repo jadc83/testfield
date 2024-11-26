@@ -23,7 +23,7 @@ class ProductoController extends Controller
     public function create()
     {
         $fabricantes = Fabricante::all();
-        return view('productos.create', [ 'fabricantes' => $fabricantes]);
+        return view('productos.create', ['fabricantes' => $fabricantes]);
     }
 
     /**
@@ -46,7 +46,7 @@ class ProductoController extends Controller
             'fabricante_id.exists' => 'El fabricante seleccionado no existe.',
         ]);
 
-        $producto= Producto::create($validated);
+        $producto = Producto::create($validated);
         session()->flash('exito', 'Producto creado correctamente.');
         return redirect()->route('productos.index', $producto);
     }
@@ -65,7 +65,7 @@ class ProductoController extends Controller
     public function edit(Producto $producto)
     {
         $fabricantes = Fabricante::all();
-        return view('productos.edit', ['producto' => $producto, 'fabricantes' => $fabricantes ]);
+        return view('productos.edit', ['producto' => $producto, 'fabricantes' => $fabricantes]);
     }
 
     /**
@@ -103,7 +103,10 @@ class ProductoController extends Controller
         return redirect()->route('productos.index');
     }
 
-    public function add(Producto $producto)
+        /**
+     * Añade un producto al carrito desde el index de productos
+     */
+    public function comprar(Producto $producto)
     {
         $carrito = session('carrito', []);
 
@@ -119,12 +122,56 @@ class ProductoController extends Controller
         }
         session(['carrito' => $carrito]);
         return redirect()->route('productos.index');
-
     }
+
+        /**
+     * Añade un producto al carrito desde la vista del carrito
+     */
+
+    public function add(Producto $producto)
+    {
+        $carrito = session('carrito', []);
+
+        if (isset($carrito[$producto->id])) {
+            $carrito[$producto->id]['cantidad'] += 1;
+        } else {
+            $carrito[$producto->id] = [
+                'id' => $producto->id,
+                'nombre' => $producto->denominacion,
+                'precio' => $producto->precio,
+                'cantidad' => 1,
+            ];
+        }
+        session(['carrito' => $carrito]);
+        return redirect()->route('micarrito');
+    }
+
+         /**
+     * Resta un producto al carrito desde la vista del carrito
+     */
+
+    public function resta(Producto $producto)
+    {
+        $carrito = session('carrito', []);
+
+        if (isset($carrito[$producto->id])) {
+            if ($carrito[$producto->id]['cantidad'] > 1) {
+                $carrito[$producto->id]['cantidad'] -= 1;
+            } else {
+                unset($carrito[$producto->id]);
+            }
+        }
+        session(['carrito' => $carrito]);
+        return redirect()->route('micarrito');
+    }
+
+         /**
+     * Vacia el carrito
+     */
 
     public function vaciar()
     {
         session()->forget('carrito');
-        return redirect()->route('productos.index');
+        return redirect()->route('micarrito');
     }
 }

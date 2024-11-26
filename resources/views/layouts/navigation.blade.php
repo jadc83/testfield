@@ -20,9 +20,6 @@
                         <x-nav-link :href="route('fabricantes.index')" :active="request()->routeIs('fabricantes.index')">
                             {{ __('Fabricantes') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('micarrito')" :active="request()->routeIs('micarrito')">
-                            {{ __('Mi Carrito') }}
-                        </x-nav-link>
                     </x-nav-link>
 
                 </div>
@@ -45,14 +42,18 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            {{ __('Mi Perfil') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('micarrito')">
+                            {{ __('Mi Carrito') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')"
+                            <x-dropdown-link class="text-red-800" :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}

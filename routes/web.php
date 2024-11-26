@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('productos', ProductoController::class);
     Route::resource('fabricantes', FabricanteController::class);
     Route::post('/productos/{producto}/add', [ProductoController::class, 'add'])->name('productos.add');
+    Route::post('/productos/{producto}/comprar', [ProductoController::class, 'comprar'])->name('productos.comprar');
+    Route::post('/productos/{producto}/resta', [ProductoController::class, 'resta'])->name('productos.resta');
     Route::post('/productos/vaciar', [ProductoController::class, 'vaciar'])->name('productos.vaciar');
 
 });
