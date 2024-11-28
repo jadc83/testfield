@@ -20,6 +20,9 @@
                         <x-nav-link :href="route('fabricantes.index')" :active="request()->routeIs('fabricantes.index')">
                             {{ __('Fabricantes') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('facturas')" :active="request()->routeIs('facturas')">
+                            {{ __('Mis Facturas') }}
+                        </x-nav-link>
                     </x-nav-link>
 
                 </div>

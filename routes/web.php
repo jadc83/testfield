@@ -22,7 +22,6 @@ Route::get('/micarrito', function () {
     } else {
         $total = 0;
     }
-
     return view('carritos.index', ['total' => $total]);
 })->middleware(['auth', 'verified'])->name('micarrito');
 
@@ -36,11 +35,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/productos/{producto}/comprar', [ProductoController::class, 'comprar'])->name('productos.comprar');
     Route::post('/productos/{producto}/resta', [ProductoController::class, 'resta'])->name('productos.resta');
     Route::post('/productos/vaciar', [ProductoController::class, 'vaciar'])->name('productos.vaciar');
+    Route::post('/productos/pagar', [ProductoController::class, 'pagar'])->name('productos.pagar');
 
 });
 
-
-
-
+Route::get('facturas', function () {
+    return view('facturas.index');
+})->middleware(['auth', 'verified'])->name('facturas');
 
 require __DIR__.'/auth.php';

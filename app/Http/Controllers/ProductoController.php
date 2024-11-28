@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fabricante;
+use App\Models\Factura;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProductoController extends Controller
 {
@@ -165,7 +168,37 @@ class ProductoController extends Controller
         session(['carrito' => $carrito]);
         return redirect()->route('micarrito');
     }
+         /**
+     * Crea una factura, enlaza los productos del carrito, los asigna a la factura y vacia el carrito
+     */
 
+    public function pagar()
+    {
+        if (Auth::check()) {
+            $factura = Factura::create([
+                'user_id' => Auth::id(),
+                'created_at' => now(),
+            ]);
+
+            $carrito = session('carrito');
+            if (session()->has('carrito')) {
+                $carrito = session('carrito'); // Obtener el carrito
+
+                foreach ($carrito as $producto) {
+                    DB::table('factura_producto')->insert([
+                        'factura_id' => $factura->id,
+                        'producto_id' => $producto['id'],
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ]);
+                }
+            }
+            session()->forget('carrito');
+            return redirect()->route('facturas');
+        }
+
+        return redirect()->route('login');
+    }
          /**
      * Vacia el carrito
      */

@@ -25,9 +25,16 @@
                 </div>
             @endforeach
         @else
-            <p class="p-2">Tu carrito esta vacio.</p>
+            <p class="p-2">Carrito Vacio.</p>
         @endif
-        <p class="bg-green-600 text-white p-2 mt-4 rounded-lg">{{ $total != 0 ? $total : 'Su carrito esta vacio' }} </p>
+    </div>
+        <div class="m-4 h-6 w-28 bg-red-600 text-white text-center rounded-lg">
+        <form action="{{ route('productos.pagar') }}" method="POST">
+            @csrf
+            <button type="submit">
+                {{ $total != 0 ? $total : 'Carrito Vacio' }}
+            </button>
+        </form>
     </div>
     <div class="m-4 h-6 w-28 bg-red-600 text-white text-center rounded-lg">
         <form action="{{ route('productos.vaciar') }}" method="POST">
