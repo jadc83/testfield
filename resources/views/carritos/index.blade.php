@@ -29,12 +29,13 @@
         @endif
     </div>
         <div class="m-4 h-6 w-28 bg-red-600 text-white text-center rounded-lg">
-        <form action="{{ route('productos.pagar') }}" method="POST">
-            @csrf
-            <button type="submit">
-                {{ $total != 0 ? $total : 'Carrito Vacio' }}
-            </button>
-        </form>
+            <form action="{{ route('productos.pagar') }}" method="POST">
+                @csrf
+                <button type="submit">
+                    {{ $total != 0 ? $total : 'Carrito Vacio' }}
+                </button>
+            </form>
+
     </div>
     <div class="m-4 h-6 w-28 bg-red-600 text-white text-center rounded-lg">
         <form action="{{ route('productos.vaciar') }}" method="POST">

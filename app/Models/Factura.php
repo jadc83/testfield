@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Factura extends Model
 {
 
-    protected $fillable = ['user_id'];
+    protected $fillable = ['user_id', 'created_at'];
 
     public function productos(){
         return $this->belongsToMany(Producto::class);

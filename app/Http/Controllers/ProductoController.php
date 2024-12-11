@@ -182,7 +182,7 @@ class ProductoController extends Controller
 
             $carrito = session('carrito');
             if (session()->has('carrito')) {
-                $carrito = session('carrito'); // Obtener el carrito
+                $carrito = session('carrito');
 
                 foreach ($carrito as $producto) {
                     DB::table('factura_producto')->insert([

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreFacturaRequest;
 use App\Http\Requests\UpdateFacturaRequest;
 use App\Models\Factura;
+use Illuminate\Support\Facades\Auth;
 
 class FacturaController extends Controller
 {
@@ -13,7 +14,17 @@ class FacturaController extends Controller
      */
     public function index()
     {
-        //
+        $total = 0;
+        $facturas = Factura::find(Auth::id());
+        foreach ($facturas as $factura){
+            $total = 0;
+            foreach($factura as $producto){
+                $total += $producto['precio'];
+            };
+            $factura['total'] = $total;
+        }
+
+        return view('facturas.index', ['facturas'=>$facturas]);
     }
 
     /**
@@ -63,4 +74,6 @@ class FacturaController extends Controller
     {
         //
     }
+
+
 }
